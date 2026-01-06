@@ -11,11 +11,17 @@ public class ReelManager : MonoBehaviour
     [Header("Settings")]
     public float reelHeight = 820f;
     public Vector2 spawnPosition = new Vector2(0, -1230f);
+    public Dopamine dopamineManager;
 
-    // Call this every time Scroll scrolls up to the next reel
     public void OnScrollNext()
     {
         SpawnReel();
+
+        if (dopamineManager != null)
+        {
+            dopamineManager.AddDopamine(1);
+        }
+
     }
 
     private void SpawnReel()
@@ -38,7 +44,7 @@ public class ReelManager : MonoBehaviour
         rt.anchoredPosition = new Vector2(0, bottomReel.anchoredPosition.y - reelHeight);
 
         // Assign random color for now
-        Image img = newReel.GetComponent<Image>();
+        Image img = newReel.GetComponentInChildren<Image>();
         if (img != null)
         {
             img.color = new Color(Random.value, Random.value, Random.value);
